@@ -1,0 +1,57 @@
+Les Jointures
+
+1. Lister les 10 premiers films ainsi que leur langues.
+
+SELECT title, name
+FROM film
+INNER JOIN language ON film.language_id = language.language_id LIMIT 10;
+
+2. Afficher les film dans les quel à joué « JENNIFER DAVIS » sortie en 2006.
+
+SELECT title, last_name, first_name, release_year  FROM film_actor
+INNER JOIN actor on film_actor.actor_id = actor.actor_id
+INNER JOIN film on film_actor.film_id = film.film_id
+WHERE release_year = '2006' AND last_name = 'Davis' AND first_name = 'Jennifer'
+;
+
+3. Afficher le noms des client ayant emprunté « ALABAMA DEVIL ».
+
+SELECT title, first_name, last_name from customer
+inner join rental on customer.customer_id = rental.customer_id
+inner join inventory on rental.inventory_id = inventory.inventory_id
+inner join film on inventory.film_id = film.film_id
+WHERE title = "ALABAMA DEVIL";
+
+4. Afficher les films louer par des personne habitant à « Woodridge ». Vérifié s’il y a des films qui n’ont jamais été emprunté.
+
+SELECT city, title, rental_date from film
+left join inventory on film.film_id = inventory.film_id
+left join rental on inventory.inventory_id = rental.inventory_id
+left join customer on rental.customer_id = customer.customer_id
+left join address on customer.address_id = address.address_id
+left join city on address.city_id = city.city_id
+
+WHERE city = "Woodridge" OR rental_date IS NULL;
+
+
+5. Quel sont les 10 films dont la durée d’emprunt à été la plus courte ?
+
+SELECT title, DATEDIFF(return_date, rental_date) as dd from film
+inner join inventory on film.film_id = inventory.film_id
+inner join rental on inventory.inventory_id = rental.inventory_id
+where DATEDIFF(return_date, rental_date) >= 1 order by dd LIMIT 10;
+
+
+6. Lister les films de la catégorie « Action » ordonnés par ordre alphabétique.
+
+SELECT title FROM film
+inner join film_category on film.film_id = film_category.film_id
+inner join category on film_category.category_id = category.category_id
+where name = "Action" order by title
+
+7. Quel sont les films dont la duré d’emprunt à été inférieur à 2 jour ?
+
+SELECT distinct title, DATEDIFF(return_date, rental_date) as dd from film
+inner join inventory on film.film_id = inventory.film_id
+inner join rental on inventory.inventory_id = rental.inventory_id
+where DATEDIFF(return_date, rental_date) < 2 order by dd;
