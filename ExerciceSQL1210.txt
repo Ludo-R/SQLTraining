@@ -1,0 +1,55 @@
+1. Afficher tout les emprunt ayant été réalisé en 2006. Le mois doit être écrit en toute lettre et le résultat doit s'affiche dans une seule colonne.
+
+SELECT CASE MONTH(rental_date)
+         WHEN 1 THEN 'janvier'
+         WHEN 2 THEN 'février'
+         WHEN 3 THEN 'mars'
+         WHEN 4 THEN 'avril'
+         WHEN 5 THEN 'mai'
+         WHEN 6 THEN 'juin'
+         WHEN 7 THEN 'juillet'
+         WHEN 8 THEN 'août'
+         WHEN 9 THEN 'septembre'
+         WHEN 10 THEN 'octobre'
+         WHEN 11 THEN 'novembre'
+         ELSE 'décembre'
+         END
+FROM rental WHERE YEAR(rental_date) = 2006;
+
+2. Afficher la colonne qui donne la durée de location des films en jours
+
+SELECT title, rental_duration FROM film;
+
+3. Afficher les emprunts réalisé avant 1h du matin en 2005. afficher la date dans un format lisible
+
+SELECT rental_date from rental
+where (year(rental_date) = 2005) and (hour(rental_date) < 1);
+
+4. Afficher les emprunts réalisé entre le mois d'avril et le mois de mai. la liste doit être trier du plus ancien au plus récent
+
+SELECT rental_date from rental where (month(rental_date) between 4 and 5) order by rental_date;
+
+5. Lister les ffilms dont le nom ne commence que par le "le"
+
+SELECT title from film where title not like "Le%";
+
+6. Lister les films ayant la mention "pg-13" ou "nc-17". Ajouter une colonne qui affichera "oui" si "nc17" et "non" sinon.
+
+SELECT title, rating, CASE rating
+    WHEN 'PG-13' THEN 'Oui'
+    WHEN 'NC-17' THEN 'Non'
+END AS valid
+FROM film
+WHERE rating = 'PG-13' or rating = 'NC-17';
+
+7. Fournir la liste des catégorie qui commence par 'A' ou un 'C' (Utiliser LEFT).
+
+SELECT name from category where name like 'A%' or 'C%';
+
+8. Lister les trois caractères des noms des catégories.
+
+SELECT LEFT(name, 3) from category;
+
+9. Lister les premiers acteurs en remplacant dans leurs prenom les E par des A
+
+SELECT REPLACE(first_name, 'E', 'A') from actor;
