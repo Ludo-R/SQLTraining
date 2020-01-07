@@ -1,0 +1,21 @@
+
+Créer un utilisateur admin1.
+Lui accorder le droit de créer d’autre utilisateurs, d’afficher toute les bases de données et d’utiliser la commande SHUTDOWN.
+
+CREATE USER admin1;
+GRANT ALL PRIVILEGES to admin1;
+
+
+Créer un utilisateur user1.
+Lui octroyer le droit de créer, supprimer et modifier une table. Lui donner la possibilité de verrouiller une table.
+Lui autoriser la création de nouvelle clé primaire.
+
+CREATE USER user1;
+GRANT CREATE, ALTER, DROP, UPDATE, LOCKS ON sakila TO user1;
+
+Créer un utilisateur user2.
+Lui autoriser l’exécution de la commande SELECT. Lui autoriser l’exécution de la commande INSERT. Lui autoriser l’exécution de la commande UPDATE. Lui autoriser l’exécution de la commande DELETE.
+
+CREATE USER user2;
+GRANT SELECT, DELETE, INSERT, UPDATE ON sakila TO user2;
+
