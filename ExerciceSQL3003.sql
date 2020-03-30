@@ -2,7 +2,7 @@
 
 select last_name, first_name
 from actor
-where actor_id not in
+where actor_id in
 (
 select actor.actor_id
 from actor
